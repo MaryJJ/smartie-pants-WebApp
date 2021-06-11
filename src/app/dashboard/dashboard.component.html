@@ -1,0 +1,59 @@
+<div fxLayout="row wrap" class="placement-head">
+  <div fxFlex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap.xs="10px">
+    <div fxLayout="column" fxLayoutAlign="end start" class="main" fxFlex="75" fxFlex.xs=100>
+      <span class="title">Placements</span>
+    </div>
+    <div fxLayoutAlign="end end" fxLayout="column" class="buttons" fxFlex="25" fxFlex.xs=100>
+      <button mat-raised-button color="primary" (click)="addPlacement()">Add Placement</button>
+    </div>
+  </div>
+</div>
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <div class="table-responsive">
+          <mat-table [dataSource]="placements" [@animateStagger]="{ value: '250' }">
+            <!-- Column Name -->
+            <ng-container matColumnDef="projectId">
+              <mat-header-cell *matHeaderCellDef>
+                <span>Project Id</span>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <span>{{ row.projectId }}</span>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Column Actions -->
+            <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef>
+                <span>Actions</span>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row" matTooltip="Actions">
+                <div>
+                  <button mat-button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editPlacement(row)">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row class="element-row" *matRowDef="let row; columns: displayedColumns"
+              (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"
+              [@animate]="{ value: '*', params: { y: '100%' } }"></mat-row>
+          </mat-table>
+          <app-paginator [length]="total" [pageSize]="pageSize" [resetPage]="resetPage.asObservable()"
+            (changeEvent)="pageChange($event)">
+          </app-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

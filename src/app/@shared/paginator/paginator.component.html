@@ -1,0 +1,12 @@
+<div fxLayout="row" fxLayoutAlign="end">
+  <mat-paginator
+    #paginator
+    [length]="length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    [showFirstLastButtons]="showFirstAndLastBtns"
+    (page)="onPage($event)"
+    [hidePageSize]="isMobile"
+  >
+  </mat-paginator>
+</div>

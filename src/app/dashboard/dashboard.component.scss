@@ -1,0 +1,32 @@
+.transparent {
+  padding-top: 15px;
+}
+.placement-head {
+  min-height: 14vh;
+  background-color: gray;
+  padding: 15px;
+  .main {
+    height: 100%;
+    padding-left: 15px;
+    color: white;
+    .title {
+      font-size: xx-large;
+      font-weight: 700;
+    }
+  }
+  .buttons {
+    padding-right: 15px;
+  }
+}
+
+mat-table {
+  mat-row {
+    cursor: pointer;
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+  .mat-column-actions {
+    flex: 0 1 80px;
+  }
+}

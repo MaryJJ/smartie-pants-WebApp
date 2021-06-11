@@ -1,0 +1,13 @@
+/*
+ * Entry point of global application style.
+ * Component-specific style should not go here and be included directly as part of the components.
+ */
+
+// Theme customization
+@import "theme/style";
+@import "assets/styles/icons/material-design-iconic-font/css/materialdesignicons.min.css";
+
+html,
+body {
+  height: 100%;
+}
