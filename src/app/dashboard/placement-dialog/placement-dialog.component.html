@@ -1,1 +1,17 @@
-<p>placement-dialog works!</p>
+<div>
+  <h2 mat-dialog-title>{{ data.placement ? 'Edit' : 'Add' }} Placement</h2>
+  <form (ngSubmit)="save()" [formGroup]="placementForm" novalidate>
+    <mat-dialog-content>
+      <mat-form-field>
+        <input formControlName="projectId" matInput placeholder="Project Id" #input />
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayoutAlign="end" fxLayoutGap="5px">
+      <button mat-raised-button color="warn" [disabled]="placementForm.invalid || isLoading">
+        <app-loader class="inline-loader" [isLoading]="isLoading" size="0.75"></app-loader>
+        <span>Save</span>
+      </button>
+      <button mat-button type="button" (click)="close(null)">Cancel</button>
+    </mat-dialog-actions>
+  </form>
+</div>

@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { SharedModule } from '@shared/shared.module';
@@ -15,6 +16,7 @@ import { PlacementDialogComponent } from './placement-dialog/placement-dialog.co
     SharedModule,
     MaterialModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
     DashboardRoutingModule,
   ],
 })
