@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 
-import { Logger, untilDestroyed, User } from '@core';
+import { Logger, User } from '@core';
 import { AuthenticationService } from '..';
 import { smartiePantsAnimations } from '@app/@shared';
 
