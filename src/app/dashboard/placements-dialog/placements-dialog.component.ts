@@ -1,3 +1,4 @@
+import { patternValidator } from '@app/@shared/directives/pattern-validator.directive';
 import { finalize } from 'rxjs/operators';
 import { PlacementDialogComponent } from './../placement-dialog/placement-dialog.component';
 import { smartiePantsAnimations } from './../../@shared/animations/index';
@@ -111,10 +112,19 @@ export class PlacementsDialogComponent implements OnInit {
 
   private createForm() {
     this.placementsForm = this.formBuilder.group({
-      projectId: ['', [Validators.required]],
+      projectId: [
+        '',
+        [
+          Validators.required,
+          patternValidator(
+            /^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$/,
+            { guidValidator: true }
+          ),
+        ],
+      ],
       storeName: [this.stores[0], [Validators.required]],
       adUnitId: ['', [Validators.required]],
-      dryrun: [false],
+      dryrun: [null],
       placements: [[], [Validators.required, Validators.minLength(1)]],
     });
   }

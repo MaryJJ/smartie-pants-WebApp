@@ -1,7 +1,7 @@
 export const Constants = {
   LOGIN_URL: '/auth/login',
   REGISTER_URL: '/auth/register',
-  PLACEMENT_URL: '/placements',
+  PROJECTS_URL: '/projects',
   ERROR: 'Upps Something go wrong.',
 };
 

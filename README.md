@@ -20,7 +20,7 @@ This project is a Angular 9 app and works as a visual client for [Smartie Pants 
 git clone https://github.com/MaryJJ/smartie-pants-WebApp.git
 ```
 
-### Initial Configuration
+## Initial Configuration
 
 Configure the environment variable serverUrl with the API url.
 

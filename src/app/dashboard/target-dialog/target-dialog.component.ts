@@ -1,6 +1,13 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { COUNTRY_CODES, Target } from '@app/@core';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-target-dialog',
@@ -13,8 +20,12 @@ export class TargetDialogComponent implements OnInit {
   countryCodes = COUNTRY_CODES;
   @Output() submitTarget = new EventEmitter<Target>();
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private cdRef: ChangeDetectorRef
+  ) {
     this.createForm();
+    this.listenChanges();
   }
 
   ngOnInit(): void {}
@@ -24,11 +35,30 @@ export class TargetDialogComponent implements OnInit {
     this.targetForm.reset({ type: this.targetTypes[0] });
   }
 
+  private listenChanges() {
+    this.targetForm.controls.type.valueChanges
+      .pipe(distinctUntilChanged())
+      .subscribe((value) => {
+        if (value === 'ecpmTarget') {
+          this.targetForm.controls.countryCodes.setValidators([
+            Validators.required,
+          ]);
+          this.targetForm.controls.global.clearValidators();
+          this.targetForm.controls.global.reset();
+        } else {
+          this.targetForm.controls.global.setValidators([Validators.required]);
+          this.targetForm.controls.countryCodes.clearValidators();
+          this.targetForm.controls.countryCodes.reset();
+        }
+        this.cdRef.detectChanges();
+      });
+  }
+
   private createForm() {
     this.targetForm = this.formBuilder.group({
       value: ['', [Validators.required]],
       type: [this.targetTypes[0], [Validators.required]],
-      countryCodes: [null],
+      countryCodes: [null, [Validators.required]],
       global: [null],
     });
   }

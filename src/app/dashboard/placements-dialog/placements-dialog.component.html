@@ -5,7 +5,9 @@
       <mat-form-field appearance="outline">
         <mat-label>Project Id</mat-label>
         <input formControlName="projectId" matInput placeholder="Project Id" />
-        <mat-error>Project Id is required</mat-error>
+        <mat-error *ngIf="placementsForm.get('projectId').hasError('required')">Project Id is required</mat-error>
+        <mat-error *ngIf="placementsForm.get('projectId').hasError('guidValidator')">Project Id must a valid GUID
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Store Name</mat-label>
@@ -21,11 +23,14 @@
         <input formControlName="adUnitId" matInput placeholder="Ad Unit Id" />
         <mat-error>Ad Unit Id is required</mat-error>
       </mat-form-field>
-      <div class="m-b-10">
-        <mat-checkbox name="dryrun" aria-label="dryrun" formControlName="dryrun">
-          <span>Dryrun</span>
-        </mat-checkbox>
-      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Dryrun</mat-label>
+        <mat-select formControlName="dryrun">
+          <mat-option>Select</mat-option>
+          <mat-option value="true">True</mat-option>
+          <mat-option value="false">False</mat-option>
+        </mat-select>
+      </mat-form-field>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px" class="placements">
         <span class="font-16">Placements</span>
         <div fxFlex="1"></div>

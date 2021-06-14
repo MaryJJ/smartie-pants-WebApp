@@ -1,7 +1,11 @@
+import { Target } from '..';
+
 export interface Placement {
   id: string;
-  projectId: string;
+  name: string;
+  archivedAt: string;
+  targets: Target[];
   storeName: number;
   adUnitId: string;
-  dryrun: true;
+  gameId: number;
 }
