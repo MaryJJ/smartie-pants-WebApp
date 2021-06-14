@@ -72,7 +72,7 @@ mat-sidenav {
       }
     }
     &.selected > .mat-list-item-content > a {
-      background: gray;
+      background: $info;
       border-radius: $radius;
       color: $white;
 

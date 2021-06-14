@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 
-import { Logger } from '@core';
+import { Logger, untilDestroyed, User } from '@core';
 import { AuthenticationService } from '..';
 import { smartiePantsAnimations } from '@app/@shared';
 
@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   error: string | undefined;
   loginForm!: FormGroup;
   isLoading = false;
+  hide = true;
 
   constructor(
     private router: Router,
@@ -42,16 +43,19 @@ export class LoginComponent implements OnInit {
         })
       )
       .subscribe(
-        (credentials) => {
-          log.debug(`${credentials.username} successfully logged in`);
+        (user: User) => {
+          log.debug(`User ${user.name} successfully logged in`);
           this.router.navigate(
-            [this.route.snapshot.queryParams.redirect || '/'],
+            [this.route.snapshot.queryParams.redirect || '/dashboard'],
             { replaceUrl: true }
           );
         },
         (error) => {
-          log.debug(`Login error: ${error}`);
-          this.error = error;
+          log.debug(error);
+          this.error =
+            typeof error?.error?.detail === 'string'
+              ? error.error.detail
+              : 'Oops, something went wrong';
         }
       );
   }

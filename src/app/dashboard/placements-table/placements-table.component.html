@@ -1,0 +1,63 @@
+<div class="table-responsive">
+  <mat-table [dataSource]="placements" [@animateStagger]="{ value: '250' }">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>
+        <span>Id</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span>{{ row.id }}</span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>
+        <span>Name</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span>{{ row.name }}</span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="archivedAt">
+      <mat-header-cell *matHeaderCellDef>
+        <span>Archived At</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span>{{ row.archivedAt }}</span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="targets">
+      <mat-header-cell *matHeaderCellDef>
+        <span>Targets</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <app-target-list [targets]="row.targets"></app-target-list>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="adUnitId">
+      <mat-header-cell *matHeaderCellDef>
+        <span>Ad Unit Id</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span>{{ row.adUnitId }}</span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="storeName">
+      <mat-header-cell *matHeaderCellDef>
+        <span>Store Name</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span>{{ row.storeName }}</span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="gameId">
+      <mat-header-cell *matHeaderCellDef>
+        <span>Game Id</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span>{{ row.gameId }}</span>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row class="element-row" *matRowDef="let row; columns: displayedColumns" (mouseover)="row.hovered = true"
+      (mouseout)="row.hovered = false"></mat-row>
+  </mat-table>
+</div>

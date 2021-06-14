@@ -1,14 +1,28 @@
-<div>
+<div id="placement-dialog">
   <h2 mat-dialog-title>{{ data.placement ? 'Edit' : 'Add' }} Placement</h2>
   <form (ngSubmit)="save()" [formGroup]="placementForm" novalidate>
     <mat-dialog-content>
-      <mat-form-field>
-        <input formControlName="projectId" matInput placeholder="Project Id" #input />
+      <mat-form-field appearance="outline">
+        <mat-label>Id</mat-label>
+        <input formControlName="id" matInput placeholder="Id" />
+        <mat-error>Id is required</mat-error>
       </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput placeholder="Name" />
+        <mat-error>Name is required</mat-error>
+      </mat-form-field>
+      <mat-divider></mat-divider>
+      <div class="m-t-10 m-b-10">
+        <span>New Target</span>
+        <app-target-dialog (submitTarget)="addTarget($event)"></app-target-dialog>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="m-t-10 m-b-10">List of targets</div>
+      <app-target-list [targets]="placementForm.controls.targets.value"></app-target-list>
     </mat-dialog-content>
     <mat-dialog-actions fxLayoutAlign="end" fxLayoutGap="5px">
-      <button mat-raised-button color="warn" [disabled]="placementForm.invalid || isLoading">
-        <app-loader class="inline-loader" [isLoading]="isLoading" size="0.75"></app-loader>
+      <button mat-raised-button color="accent" [disabled]="placementForm.invalid">
         <span>Save</span>
       </button>
       <button mat-button type="button" (click)="close(null)">Cancel</button>

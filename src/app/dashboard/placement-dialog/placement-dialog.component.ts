@@ -1,10 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Placement } from '@app/@core';
-import { generate, observe } from 'fast-json-patch';
-import { PlacementService } from '../placement.service';
+import { Placement, Target } from '@app/@core';
 
 interface DialogData {
   placement: Placement;
@@ -16,79 +13,32 @@ interface DialogData {
 })
 export class PlacementDialogComponent implements OnInit {
   placementForm: FormGroup;
-  isLoading = false;
-  observer: any;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialogRef: MatDialogRef<PlacementDialogComponent>,
-    private formBuilder: FormBuilder,
-    private placementService: PlacementService,
-    private snackBar: MatSnackBar
+    private formBuilder: FormBuilder
   ) {
     this.createForm();
   }
 
-  ngOnInit(): void {
-    if (this.data.placement) {
-      this.observer = observe(this.data.placement);
-    }
-  }
+  ngOnInit(): void {}
 
   save() {
-    this.data.placement ? this.update() : this.add();
+    this.data.placement ? this.edit() : this.add();
   }
 
   add() {
-    this.isLoading = true;
-    // this.placementService
-    //   .addPlacement(this.placementForm.value)
-    //   .pipe(
-    //     finalize(() => {
-    //       this.isLoading = false;
-    //     })
-    //   )
-    //   .subscribe(
-    //     (data) => {
-    //       this.close(data);
-    //     },
-    //     (error) => {
-    //       if (error.error && error.error.detail) {
-    //         this.snackBar.open(error.error.detail, '', { duration: 3000 });
-    //       } else {
-    //         this.snackBar.open('Upps Something go wrong.', '', {
-    //           duration: 3000,
-    //         });
-    //       }
-    //     }
-    //   );
+    this.close(this.placementForm.value);
   }
 
-  update() {
-    const patch = generate(this.observer);
-    if (patch.length > 0) {
-      this.isLoading = true;
-      // this.placementService
-      //   .updatePlacement(this.data.placement.id, patch)
-      //   .pipe(
-      //     finalize(() => {
-      //       this.isLoading = false;
-      //     })
-      //   )
-      //   .subscribe(
-      //     (data) => {
-      //       this.close(data);
-      //     },
-      //     (error) => {
-      //       if (error.error && error.error.detail) {
-      //         this.snackBar.open(error.error.detail, '', { duration: 3000 });
-      //       } else {
-      //         this.snackBar.open('Upps Something go wrong.', '', {
-      //           duration: 3000,
-      //         });
-      //       }
-      //     }
-      //   );
-    }
+  edit() {}
+
+  addTarget(target: Target) {
+    this.placementForm.controls.targets.setValue([
+      ...this.placementForm.controls.targets.value,
+      target,
+    ]);
   }
 
   close(placement: Placement) {
@@ -97,7 +47,9 @@ export class PlacementDialogComponent implements OnInit {
 
   private createForm() {
     this.placementForm = this.formBuilder.group({
-      projectId: [null],
+      id: ['', [Validators.required]],
+      name: ['', [Validators.required]],
+      targets: [[], [Validators.required, Validators.minLength(1)]],
     });
   }
 }

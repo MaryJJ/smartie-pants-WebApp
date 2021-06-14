@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Constants, User } from '@app/@core';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Credentials, CredentialsService } from './credentials.service';
 
@@ -8,41 +11,44 @@ export interface LoginContext {
   password: string;
   remember?: boolean;
 }
-
-/**
- * Provides a base for authentication workflow.
- * The login/logout methods should be replaced with proper implementation.
- */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationService {
+  constructor(
+    private credentialsService: CredentialsService,
+    private http: HttpClient
+  ) {}
 
-  constructor(private credentialsService: CredentialsService) { }
-
-  /**
-   * Authenticates the user.
-   * @param context The login parameters.
-   * @return The user credentials.
-   */
-  login(context: LoginContext): Observable<Credentials> {
-    // Replace by proper authentication call
-    const data = {
-      username: context.username,
-      token: '123456'
-    };
-    this.credentialsService.setCredentials(data, context.remember);
-    return of(data);
+  login(context: LoginContext): Observable<User> {
+    return this.http
+      .post<any>(
+        Constants.LOGIN_URL,
+        { email: context.username, password: context.password },
+        { observe: 'response' }
+      )
+      .pipe(
+        map((resp) => {
+          const credentials: Credentials = {
+            username: `${resp.body.name}`,
+            token: this.getToken(resp.headers.get('Authorization')),
+          };
+          this.credentialsService.setCredentials(credentials, context.remember);
+          return resp.body;
+        })
+      );
   }
 
-  /**
-   * Logs out the user and clear credentials.
-   * @return True if the user was logged out successfully.
-   */
-  logout(): Observable<boolean> {
-    // Customize credentials invalidation here
+  logout(): void {
     this.credentialsService.setCredentials();
-    return of(true);
   }
 
+  register(user: any): Observable<User> {
+    return this.http.post<User>(Constants.REGISTER_URL, user);
+  }
+
+  private getToken(data: string): string {
+    const token = data.split(' ');
+    return token.length > 0 ? token[1] : null;
+  }
 }

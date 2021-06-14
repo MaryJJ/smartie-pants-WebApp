@@ -1,8 +1,9 @@
 <div class="fregister mat-typography" fxFill fxLayout="column" fxLayoutAlign="center center" fxlayoutGap="1rem">
-  <div class="logo" fxLayoutAlign="center center">
+  <div class="logo" fxLayoutAlign="center center" [@animate]="{ value: '*', params: { scale: '0.2' } }">
     <img src="assets/images/Smartie-pants-logo.svg" />
   </div>
-  <span class="title">Your account has been created</span>
+  <span class="title" [@animate]="{ value: '*', params: { delay: '50ms', y: '25px' } }">Your account has been
+    created</span>
   <a class="back-link" style="font-size: 16px" [routerLink]="['/login']">
     <mat-icon>account_circle</mat-icon>
     Return To login

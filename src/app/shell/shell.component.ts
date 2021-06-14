@@ -2,6 +2,7 @@ import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MediaObserver } from '@angular/flex-layout';
+import { AuthenticationService } from '@app/auth';
 
 @Component({
   selector: 'app-shell',
@@ -12,7 +13,8 @@ export class ShellComponent implements OnInit {
   constructor(
     private titleService: Title,
     private media: MediaObserver,
-    private router: Router
+    private router: Router,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit() {}
@@ -26,6 +28,7 @@ export class ShellComponent implements OnInit {
   }
 
   logout() {
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 }

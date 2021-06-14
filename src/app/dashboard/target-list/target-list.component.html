@@ -1,0 +1,7 @@
+<div>
+  <div *ngFor="let target of targets" fxLayout="column">
+    <span> Value: {{target.value}} </span>
+    <span *ngIf="target.countryCodes">Country Codes: {{target.countryCodes.join(" ")}} </span>
+    <span *ngIf="target.global">Global: {{target.global}} </span>
+  </div>
+</div>

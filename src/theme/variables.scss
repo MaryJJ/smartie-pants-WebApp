@@ -102,6 +102,10 @@ $custom-typography: mat-typography-config(
 @include angular-material-theme($theme);
 
 /*Theme Colors*/
+$light-text: #a6b7bf;
+$themecolor: #1b9aaa;
+$themecolor-alt: #26c6da;
+$themecolor-dark: #028ee1;
 
 $topbar: #2196f3;
 $sidebar: #fff;
@@ -110,15 +114,10 @@ $sidebar-alt: #f2f6f8;
 $bodycolor: #eef5f9;
 $headingtext: #455a64;
 $bodytext: #67757c;
-$sidebar-text: #607d8b;
-$sidebar-icons: #99abb4;
+$sidebar-text: $themecolor;
+$sidebar-icons: $themecolor;
 
 $font-14: 14px;
-
-$light-text: #a6b7bf;
-$themecolor: #1b9aaa;
-$themecolor-alt: #26c6da;
-$themecolor-dark: #028ee1;
 
 $danger: #b0003a;
 $success: #26c6da;

@@ -1,0 +1,46 @@
+<div>
+  <h2 mat-dialog-title>{{data.create ? 'Create': 'Update'}} placements</h2>
+  <form (ngSubmit)="save()" [formGroup]="placementsForm" novalidate>
+    <mat-dialog-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Project Id</mat-label>
+        <input formControlName="projectId" matInput placeholder="Project Id" />
+        <mat-error>Project Id is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Store Name</mat-label>
+        <mat-select formControlName="storeName">
+          <mat-option *ngFor="let store of stores" [value]="store">
+            {{store}}
+          </mat-option>
+        </mat-select>
+        <mat-error>Store Name is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Ad Unit Id</mat-label>
+        <input formControlName="adUnitId" matInput placeholder="Ad Unit Id" />
+        <mat-error>Ad Unit Id is required</mat-error>
+      </mat-form-field>
+      <div class="m-b-10">
+        <mat-checkbox name="dryrun" aria-label="dryrun" formControlName="dryrun">
+          <span>Dryrun</span>
+        </mat-checkbox>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px" class="placements">
+        <span class="font-16">Placements</span>
+        <div fxFlex="1"></div>
+        <button mat-raised-button color="primary" (click)="addPlacement()" type="button">
+          Add
+        </button>
+      </div>
+      <app-placements-table [placements]="placementsForm.controls.placements.value"></app-placements-table>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayoutAlign="end" fxLayoutGap="5px">
+      <button mat-raised-button color="accent" [disabled]="placementsForm.invalid || isLoading">
+        <app-loader class="inline-loader" [isLoading]="isLoading" size="0.75"></app-loader>
+        <span>Save</span>
+      </button>
+      <button mat-button type="button" (click)="close(null)">Cancel</button>
+    </mat-dialog-actions>
+  </form>
+</div>

@@ -1,13 +1,11 @@
 import { smartiePantsAnimations } from './../@shared/animations/index';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import { Placement } from '@app/@core';
+import { Logger, Placement } from '@app/@core';
 import { Subject } from 'rxjs';
-import { PlacementService } from './placement.service';
+import { PlacementsDialogComponent } from './placements-dialog/placements-dialog.component';
 
+const log = new Logger('Dashboard');
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -17,70 +15,33 @@ import { PlacementService } from './placement.service';
 export class DashboardComponent implements OnInit {
   placements: Placement[];
   isLoading = false;
-  displayedColumns: string[] = ['projectId', 'actions'];
-  total = 0;
-  pageNumber = 1;
-  pageSize = 10;
-  resetPage: Subject<boolean> = new Subject<boolean>();
-  constructor(
-    private placementService: PlacementService,
-    private placementDialog: MatDialog,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private router: Router
-  ) {}
+  displayedColumns: string[] = ['projectId'];
 
-  ngOnInit(): void {
-    this.loadData();
-  }
+  constructor(private placementsDialog: MatDialog) {}
+
+  ngOnInit(): void {}
 
   addPlacement() {
+    this.openDialog(true);
+  }
+
+  editPlacement() {
+    this.openDialog(false);
+  }
+
+  private openDialog(create: boolean) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      placement: null,
+      create,
     };
-    dialogConfig.width = '400px';
-    // const dialogRef = this.placementDialog.open(PlacementDialogComponent, dialogConfig);
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     this.loadData();
-    //   }
-    // });
-  }
-
-  editPlacement(placement: Placement) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      placement,
-    };
-    dialogConfig.width = '400px';
-    // const dialogRef = this.placementDialog.open(PlacementDialogComponent, dialogConfig);
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     log.info(result);
-    //   }
-    // });
-  }
-
-  pageChange(event: PageEvent) {
-    this.pageNumber = event.pageIndex + 1;
-    this.pageSize = event.pageSize;
-    this.loadData();
-  }
-
-  private loadData() {
-    this.isLoading = true;
-    // this.placementService
-    //   .getPlacements({ pageNumber: this.pageNumber, pageSize: this.pageSize })
-    //   .pipe(
-    //     finalize(() => {
-    //       this.isLoading = false;
-    //     })
-    //   )
-    //   .subscribe((response) => {
-    //     const pagination = JSON.parse(response.headers.get('X-Pagination'));
-    //     this.placements = response.body;
-    //     this.total = pagination.totalCount;
-    //   });
+    const dialogRef = this.placementsDialog.open(
+      PlacementsDialogComponent,
+      dialogConfig
+    );
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.placements = result;
+      }
+    });
   }
 }

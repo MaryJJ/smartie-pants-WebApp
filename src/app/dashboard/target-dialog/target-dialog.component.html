@@ -1,0 +1,27 @@
+<div id="target" class="container">
+  <form (ngSubmit)="save()" [formGroup]="targetForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let type of targetTypes" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Value</mat-label>
+      <input matInput formControlName="value" placeholder="Value" type="number">
+      <mat-error>Value is required</mat-error>
+    </mat-form-field>
+    <div class="m-b-20" *ngIf="targetForm.controls.type.value === 'globalTarget'">
+      <mat-checkbox formControlName="global" color="accent">Global</mat-checkbox>
+    </div>
+    <mat-form-field appearance="outline" *ngIf="targetForm.controls.type.value === 'ecpmTarget'">
+      <mat-label>Country Codes</mat-label>
+      <mat-select formControlName="countryCodes" multiple>
+        <mat-option *ngFor="let code of countryCodes" [value]="code">{{code}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="targetForm.invalid">Add</button>
+  </form>
+</div>
