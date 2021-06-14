@@ -1,5 +1,4 @@
 import { MenuItems } from './menu-items/menu-items';
-import { PaginatorComponent } from './paginator/paginator.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -15,7 +14,6 @@ import { SpinnerComponent } from '.';
   imports: [FlexLayoutModule, MaterialModule, CommonModule],
   declarations: [
     LoaderComponent,
-    PaginatorComponent,
     AccordionAnchorDirective,
     AccordionLinkDirective,
     AccordionDirective,
@@ -23,7 +21,6 @@ import { SpinnerComponent } from '.';
   ],
   exports: [
     LoaderComponent,
-    PaginatorComponent,
     AccordionAnchorDirective,
     AccordionLinkDirective,
     AccordionDirective,

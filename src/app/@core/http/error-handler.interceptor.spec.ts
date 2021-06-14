@@ -9,6 +9,7 @@ import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { ErrorHandlerInterceptor } from './error-handler.interceptor';
 import { Router } from '@angular/router';
 import { CredentialsService } from '@app/auth';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ErrorHandlerInterceptor', () => {
   let errorHandlerInterceptor: ErrorHandlerInterceptor;
@@ -18,15 +19,13 @@ describe('ErrorHandlerInterceptor', () => {
   let credentials: CredentialsService;
 
   function createInterceptor() {
-    router = TestBed.inject(Router);
-    credentials = TestBed.inject(CredentialsService);
     errorHandlerInterceptor = new ErrorHandlerInterceptor(router, credentials);
     return errorHandlerInterceptor;
   }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [
         {
           provide: HTTP_INTERCEPTORS,
@@ -40,6 +39,8 @@ describe('ErrorHandlerInterceptor', () => {
     httpMock = TestBed.inject(
       HttpTestingController as Type<HttpTestingController>
     );
+    router = TestBed.inject(Router);
+    credentials = TestBed.inject(CredentialsService);
   });
 
   afterEach(() => {
