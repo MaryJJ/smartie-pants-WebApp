@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  serverUrl: 'https://localhost:5001/api',
+  serverUrl: 'https://smartie-pants-api.herokuapp.com/api',
   version: '1.0.0',
 };

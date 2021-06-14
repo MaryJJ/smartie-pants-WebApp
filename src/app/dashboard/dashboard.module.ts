@@ -14,7 +14,14 @@ import { TargetDialogComponent } from './target-dialog/target-dialog.component';
 import { TargetListComponent } from './target-list/target-list.component';
 
 @NgModule({
-  declarations: [DashboardComponent, PlacementDialogComponent, PlacementsDialogComponent, PlacementsTableComponent, TargetDialogComponent, TargetListComponent],
+  declarations: [
+    DashboardComponent,
+    PlacementDialogComponent,
+    PlacementsDialogComponent,
+    PlacementsTableComponent,
+    TargetDialogComponent,
+    TargetListComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,
