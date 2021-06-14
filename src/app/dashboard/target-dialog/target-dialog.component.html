@@ -1,5 +1,5 @@
 <div id="target" class="container">
-  <form (ngSubmit)="save()" [formGroup]="targetForm">
+  <form (ngSubmit)="save()" [formGroup]="targetForm" #myForm="ngForm">
     <mat-form-field appearance="outline">
       <mat-label>Type</mat-label>
       <mat-select formControlName="type">

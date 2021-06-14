@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter,
   ChangeDetectorRef,
+  ViewChild,
 } from '@angular/core';
 import { COUNTRY_CODES, Target } from '@app/@core';
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -19,6 +20,7 @@ export class TargetDialogComponent implements OnInit {
   targetForm: FormGroup;
   countryCodes = COUNTRY_CODES;
   @Output() submitTarget = new EventEmitter<Target>();
+  @ViewChild('myForm') myForm: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +35,7 @@ export class TargetDialogComponent implements OnInit {
   save() {
     this.submitTarget.next(this.targetForm.value);
     this.targetForm.reset({ type: this.targetTypes[0] });
+    this.myForm.resetForm();
   }
 
   private listenChanges() {
